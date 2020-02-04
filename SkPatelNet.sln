@@ -3,9 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{A8B4FFA6-9127-498C-8B29-5B88B1E2A24D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkPatelNet.Web", "SkPatelNet.Web\SkPatelNet.Web.csproj", "{3D88E038-C04B-4F4B-83B0-1975E552305B}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D88E038-C04B-4F4B-83B0-1975E552305B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D88E038-C04B-4F4B-83B0-1975E552305B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D88E038-C04B-4F4B-83B0-1975E552305B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D88E038-C04B-4F4B-83B0-1975E552305B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D88E038-C04B-4F4B-83B0-1975E552305B} = {A8B4FFA6-9127-498C-8B29-5B88B1E2A24D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C66BC02-2405-4140-93C0-F3856F6802BC}
