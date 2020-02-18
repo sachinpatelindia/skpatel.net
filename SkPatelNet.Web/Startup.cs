@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkPatelNet.Core.Infrastructure;
 
 namespace SkPatelNet.Web
 {
@@ -24,6 +25,9 @@ namespace SkPatelNet.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            var engineContext = EngineContext.Create();
+            engineContext.ConfigureService(services, Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

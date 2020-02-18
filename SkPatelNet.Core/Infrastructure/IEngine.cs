@@ -9,7 +9,7 @@ namespace SkPatelNet.Core.Infrastructure
 {
     public interface IEngine
     {
-        IServiceProvider ConfigureService(IServiceCollection collection, IConfiguration configure);
+        IServiceProvider ConfigureService(IServiceCollection services, IConfiguration configure);
         void ConfigureRequestPipleline(IApplicationBuilder builder);
         T Resolve<T>() where T : class;
         object Resolve(Type type);

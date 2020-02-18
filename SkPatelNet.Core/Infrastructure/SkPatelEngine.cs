@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Linq;
 namespace SkPatelNet.Core.Infrastructure
 {
     public class SkPatelEngine : IEngine
@@ -16,9 +16,15 @@ namespace SkPatelNet.Core.Infrastructure
             throw new NotImplementedException();
         }
 
-        public IServiceProvider ConfigureService(IServiceCollection collection, IConfiguration configure)
+        public IServiceProvider ConfigureService(IServiceCollection services, IConfiguration configuration)
         {
-            throw new NotImplementedException();
+            var typeFinder = new WebAppTypeFinder();
+            var startupConfigurations = typeFinder.FindClassesOfType<ISkPatelStartup>();
+            var instances = startupConfigurations.Select(startup => (ISkPatelStartup)Activator.CreateInstance(startup))
+                .OrderBy(startup => startup.Order);
+            foreach (var instance in instances)
+                instance.ConfigureServices(services, configuration);
+            return _serviceProvider;
         }
 
         public T Resolve<T>() where T : class
