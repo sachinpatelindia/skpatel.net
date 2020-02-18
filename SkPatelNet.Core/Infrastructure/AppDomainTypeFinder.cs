@@ -2,18 +2,25 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace SkPatelNet.Core.Infrastructure
 {
     public class AppDomainTypeFinder:ITypeFinder
     {
-        private bool _ignoreReflectionErrors;
+        private bool _ignoreReflectionErrors = true;
+        private ISkPatelFileProvider _fileProvider;
 
-        public AppDomainTypeFinder()
+        public AppDomainTypeFinder(ISkPatelFileProvider fileProvider=null)
         {
+            _fileProvider = fileProvider;
         }
 
         public bool LoadAppDomainAssemblies { get; set; }
+        public IList<string> AssemblyNames { get; set; } = new List<string>();
+        public string AssemblySkipLoadingPattern { get;  set; }
+        public string AssemblyRestrictToLoadingPattern { get;  set; }
+        public virtual AppDomain App => AppDomain.CurrentDomain;
 
         public IEnumerable<Type> FindClassesOfType<T>(bool onlyConcreteClasses = true)
         {
@@ -86,9 +93,26 @@ namespace SkPatelNet.Core.Infrastructure
             return result;
         }
 
-        private bool DoesTypeImplementOpenGeneric(Type t, Type assignTypeFrom)
+        protected virtual bool DoesTypeImplementOpenGeneric(Type type, Type openGeneric)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var genericTypeDefinition = openGeneric.GetGenericTypeDefinition();
+                foreach(var implementedInterface in type.FindInterfaces((objectType,objectCritical)=>true,null))
+                {
+                    if (!implementedInterface.IsGenericType)
+                        continue;
+
+                    var isMatch = genericTypeDefinition.IsAssignableFrom(implementedInterface.GetGenericTypeDefinition());
+                    return
+                         isMatch;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public virtual IList<Assembly> GetAssemblies()
@@ -103,12 +127,68 @@ namespace SkPatelNet.Core.Infrastructure
 
         private void AddConfiguredAssemblies(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
-            throw new NotImplementedException();
+           foreach(var assemblyName in AssemblyNames)
+            {
+                var assembly = Assembly.Load(assemblyName);
+                if (addedAssemblyNames.Contains(assembly.FullName))
+                    continue;
+                assemblies.Add(assembly);
+                addedAssemblyNames.Add(assembly.FullName);
+
+            }
         }
 
         private void AddAssembliesInAppDomain(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
-            throw new NotImplementedException();
+            foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!Matches(assembly.FullName))
+                    continue;
+
+                if (addedAssemblyNames.Contains(assembly.FullName))
+                    continue;
+                assemblies.Add(assembly);
+                addedAssemblyNames.Add(assembly.FullName);                 
+            }
+        }
+
+        public virtual bool Matches(string assemblyFullName)
+        {
+            return !Matches(assemblyFullName, AssemblySkipLoadingPattern) && Matches(assemblyFullName, AssemblyRestrictToLoadingPattern);
+        }
+
+        protected virtual bool Matches(string assemblyFullName, string pattern)
+        {
+            return Regex.IsMatch(assemblyFullName,pattern,RegexOptions.IgnoreCase|RegexOptions.Compiled);
+        }
+
+        protected virtual void LoadMatchingAssemblies(string directoryPath)
+        {
+            var loadedAssemblyNames = new List<string>();
+            foreach(var a in GetAssemblies())
+            {
+                loadedAssemblyNames.Add(a.FullName);
+            }
+            if(_fileProvider.DirectoryExists(directoryPath))
+            {
+                return;
+            }
+
+            foreach(var dllPath in _fileProvider.GetFiles(directoryPath,"*.dll"))
+            {
+                try
+                {
+                    var an = AssemblyName.GetAssemblyName(dllPath);
+                    if(Matches(an.FullName)&& !loadedAssemblyNames.Contains(an.FullName))
+                    {
+                        App.Load(an);
+                    }
+                }
+                catch(BadImageFormatException ex)
+                {
+                    Trace.TraceError(ex.ToString());
+                }
+            }
         }
     }
 }

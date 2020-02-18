@@ -28,10 +28,5 @@ namespace SkPatelNet.Core.Infrastructure
             LoadMatchingAssemblies(binPath);
             return base.GetAssemblies();
         }
-
-        private void LoadMatchingAssemblies(string binPath)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
