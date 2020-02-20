@@ -14,5 +14,6 @@ namespace SkPatelNet.Core.Infrastructure
         public IEnumerable<Type> FindClassesOfType<T>(IEnumerable<Assembly> assemblies, bool onlyConcreteClasses = true);
 
         public IEnumerable<Type> FindClassesOfType(Type assignFrom, IEnumerable<Assembly> assemblies, bool onlyConcreteClasses);
+        IList<Assembly> GetAssemblies();
     }
 }

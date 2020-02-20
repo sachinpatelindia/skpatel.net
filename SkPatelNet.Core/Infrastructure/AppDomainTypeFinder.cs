@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.FileProviders;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -9,17 +11,20 @@ namespace SkPatelNet.Core.Infrastructure
     public class AppDomainTypeFinder:ITypeFinder
     {
         private bool _ignoreReflectionErrors = true;
-        private ISkPatelFileProvider _fileProvider;
-
-        public AppDomainTypeFinder(ISkPatelFileProvider fileProvider=null)
+        //private ISkPatelFileProvider _fileProvider;
+        private readonly IFileProvider _fileProvider;
+        //public AppDomainTypeFinder(ISkPatelFileProvider fileProvider=null)
+        //{
+        //    _fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
+        //}
+        public AppDomainTypeFinder(IFileProvider fileProvider=null)
         {
-            _fileProvider = fileProvider;
+            this._fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
         }
-
         public bool LoadAppDomainAssemblies { get; set; }
         public IList<string> AssemblyNames { get; set; } = new List<string>();
-        public string AssemblySkipLoadingPattern { get;  set; }
-        public string AssemblyRestrictToLoadingPattern { get;  set; }
+        public string AssemblySkipLoadingPattern { get; set; } = ".*";
+        public string AssemblyRestrictToLoadingPattern { get; set; } = "";
         public virtual AppDomain App => AppDomain.CurrentDomain;
 
         public IEnumerable<Type> FindClassesOfType<T>(bool onlyConcreteClasses = true)
@@ -169,17 +174,17 @@ namespace SkPatelNet.Core.Infrastructure
             {
                 loadedAssemblyNames.Add(a.FullName);
             }
-            if(_fileProvider.DirectoryExists(directoryPath))
+            if(_fileProvider.GetDirectoryContents(directoryPath).Exists)
             {
                 return;
             }
 
-            foreach(var dllPath in _fileProvider.GetFiles(directoryPath,"*.dll"))
+            foreach (var dllPath in Directory.GetFiles(directoryPath, "*.dll"))
             {
                 try
                 {
                     var an = AssemblyName.GetAssemblyName(dllPath);
-                    if(Matches(an.FullName)&& !loadedAssemblyNames.Contains(an.FullName))
+                    if(Matches(an.FullName) && !loadedAssemblyNames.Contains(an.FullName))
                     {
                         App.Load(an);
                     }
@@ -190,5 +195,10 @@ namespace SkPatelNet.Core.Infrastructure
                 }
             }
         }
+    }
+
+    public class CommonHelper
+    {
+        public static IFileProvider DefaultFileProvider { get;  set; }
     }
 }

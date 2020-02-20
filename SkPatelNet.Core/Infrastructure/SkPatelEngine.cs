@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.Reflection;
+
 namespace SkPatelNet.Core.Infrastructure
 {
     public class SkPatelEngine : IEngine
@@ -13,7 +16,21 @@ namespace SkPatelNet.Core.Infrastructure
 
         public void ConfigureRequestPipleline(IApplicationBuilder builder)
         {
-            throw new NotImplementedException();
+            var typeFinder = Resolve<ITypeFinder>();
+            var startupConfigurations = typeFinder.FindClassesOfType<ISkPatelStartup>();
+            var instances = startupConfigurations
+                .Select(startup => (ISkPatelStartup)Activator.CreateInstance(startup))
+                .OrderBy(startup => startup.Order);
+
+            foreach (var instance in instances)
+                instance.Configure(builder);
+        }
+
+        protected IServiceProvider GetServiceProvider()
+        {
+            var accessor = ServiceProvider.GetService<IHttpContextAccessor>();
+            var context = accessor.HttpContext;
+            return context?.RequestServices ?? ServiceProvider;
         }
 
         public IServiceProvider ConfigureService(IServiceCollection services, IConfiguration configuration)
@@ -24,22 +41,35 @@ namespace SkPatelNet.Core.Infrastructure
                 .OrderBy(startup => startup.Order);
             foreach (var instance in instances)
                 instance.ConfigureServices(services, configuration);
+
+            RegisterDependencies(services,typeFinder);
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             return _serviceProvider;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a=>a.FullName==args.Name);
+            if (assembly != null)
+                return assembly;
+            var typeFinder = Resolve<ITypeFinder>();
+            assembly = typeFinder.GetAssemblies().FirstOrDefault(a=>a.FullName==args.Name);
+            return assembly;
         }
 
         public T Resolve<T>() where T : class
         {
-            throw new NotImplementedException();
+            return (T)Resolve(typeof(T));
         }
 
         public object Resolve(Type type)
         {
-            throw new NotImplementedException();
+            return GetServiceProvider().GetService(type);
         }
 
         public IEnumerable<T> ResolveAll<T>()
         {
-            throw new NotImplementedException();
+            return (IEnumerable<T>)GetServiceProvider().GetService(typeof(T));
         }
 
         public object ResolveUnregistered(Type t)
@@ -47,7 +77,11 @@ namespace SkPatelNet.Core.Infrastructure
             throw new NotImplementedException();
         }
 
-
+        protected virtual IServiceProvider RegisterDependencies(IServiceCollection services,ITypeFinder typeFinder)
+        {
+            _serviceProvider = services.BuildServiceProvider();
+            return _serviceProvider;
+        }
         public virtual IServiceProvider ServiceProvider => _serviceProvider;
     }
 }

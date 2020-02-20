@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkPatelNet.Web", "SkPatelNe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{DBB4891C-E96A-4343-BD05-50DCD0FA4186}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkPatelNet.Core", "SkPatelNet.Core\SkPatelNet.Core.csproj", "{E75CF9EA-6333-4D6D-8D01-D39752C6EFF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkPatelNet.Core", "SkPatelNet.Core\SkPatelNet.Core.csproj", "{E75CF9EA-6333-4D6D-8D01-D39752C6EFF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkPatelNet.Web.Framework", "SkPatelNet.Web.Framework\SkPatelNet.Web.Framework.csproj", "{6046B061-D2D9-482F-AED3-C8C83C5FA775}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{E75CF9EA-6333-4D6D-8D01-D39752C6EFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E75CF9EA-6333-4D6D-8D01-D39752C6EFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E75CF9EA-6333-4D6D-8D01-D39752C6EFF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6046B061-D2D9-482F-AED3-C8C83C5FA775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6046B061-D2D9-482F-AED3-C8C83C5FA775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6046B061-D2D9-482F-AED3-C8C83C5FA775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6046B061-D2D9-482F-AED3-C8C83C5FA775}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3D88E038-C04B-4F4B-83B0-1975E552305B} = {A8B4FFA6-9127-498C-8B29-5B88B1E2A24D}
 		{E75CF9EA-6333-4D6D-8D01-D39752C6EFF2} = {DBB4891C-E96A-4343-BD05-50DCD0FA4186}
+		{6046B061-D2D9-482F-AED3-C8C83C5FA775} = {A8B4FFA6-9127-498C-8B29-5B88B1E2A24D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C66BC02-2405-4140-93C0-F3856F6802BC}
