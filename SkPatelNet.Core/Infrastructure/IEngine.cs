@@ -14,6 +14,6 @@ namespace SkPatelNet.Core.Infrastructure
         T Resolve<T>() where T : class;
         object Resolve(Type type);
         IEnumerable<T> ResolveAll<T>();
-        object ResolveUnregistered(Type t);
+        //object ResolveUnregistered(Type t);
     }
 }

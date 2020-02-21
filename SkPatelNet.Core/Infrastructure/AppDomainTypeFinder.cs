@@ -21,10 +21,11 @@ namespace SkPatelNet.Core.Infrastructure
         {
             this._fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
         }
-        public bool LoadAppDomainAssemblies { get; set; }
+        public bool LoadAppDomainAssemblies { get; set; } = true;
         public IList<string> AssemblyNames { get; set; } = new List<string>();
-        public string AssemblySkipLoadingPattern { get; set; } = ".*";
-        public string AssemblyRestrictToLoadingPattern { get; set; } = "";
+        public string AssemblySkipLoadingPattern { get; set; } = "^System|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Rhino|^Telerik|^Iesi|^TestDriven|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease";
+
+        public string AssemblyRestrictToLoadingPattern { get; set; } = ".*";
         public virtual AppDomain App => AppDomain.CurrentDomain;
 
         public IEnumerable<Type> FindClassesOfType<T>(bool onlyConcreteClasses = true)
@@ -186,7 +187,8 @@ namespace SkPatelNet.Core.Infrastructure
                     var an = AssemblyName.GetAssemblyName(dllPath);
                     if(Matches(an.FullName) && !loadedAssemblyNames.Contains(an.FullName))
                     {
-                        App.Load(an);
+                        if (!(an.FullName.Contains("SkPatelNet.Web.Views")))
+                            App.Load(an);
                     }
                 }
                 catch(BadImageFormatException ex)

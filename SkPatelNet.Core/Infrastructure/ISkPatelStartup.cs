@@ -8,6 +8,6 @@ namespace SkPatelNet.Core.Infrastructure
     {
         void ConfigureServices(IServiceCollection services, IConfiguration configuration);
         void Configure(IApplicationBuilder applicationBuilder);
-        int Order { get; set; }
+        int Order { get; }
     }
 }

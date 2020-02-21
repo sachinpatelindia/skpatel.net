@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using System.Reflection;
 
 namespace SkPatelNet.Core.Infrastructure
@@ -72,14 +71,17 @@ namespace SkPatelNet.Core.Infrastructure
             return (IEnumerable<T>)GetServiceProvider().GetService(typeof(T));
         }
 
-        public object ResolveUnregistered(Type t)
-        {
-            throw new NotImplementedException();
-        }
+        //public object ResolveUnregistered(Type t)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         protected virtual IServiceProvider RegisterDependencies(IServiceCollection services,ITypeFinder typeFinder)
         {
+            services.AddSingleton<IEngine, SkPatelEngine>();
+            services.AddSingleton<ITypeFinder, AppDomainTypeFinder>();
             _serviceProvider = services.BuildServiceProvider();
+
             return _serviceProvider;
         }
         public virtual IServiceProvider ServiceProvider => _serviceProvider;
