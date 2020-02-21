@@ -79,7 +79,7 @@ namespace SkPatelNet.Core.Infrastructure
         protected virtual IServiceProvider RegisterDependencies(IServiceCollection services,ITypeFinder typeFinder)
         {
             services.AddSingleton<IEngine, SkPatelEngine>();
-            services.AddSingleton<ITypeFinder, AppDomainTypeFinder>();
+            services.AddSingleton<ITypeFinder>(typeFinder);
             _serviceProvider = services.BuildServiceProvider();
 
             return _serviceProvider;
