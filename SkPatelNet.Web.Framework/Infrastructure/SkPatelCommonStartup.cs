@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkPatelNet.Core.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SkPatelNet.Web.Framework.Infrastructure
 {
@@ -15,6 +12,7 @@ namespace SkPatelNet.Web.Framework.Infrastructure
         public void Configure(IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseStaticFiles();
+            applicationBuilder.UseRouting();
         }
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)

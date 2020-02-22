@@ -26,7 +26,7 @@ namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
 
         public static void AddSkPatelAuthentication(this IServiceCollection services)
         {
-            services.AddAuthentication();
+           // services.AddAuthentication();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SkPatelNet.Web.Framework.Infrastructure
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            /// throw new NotImplementedException();
+            services.AddControllersWithViews();
         }
     }
 }

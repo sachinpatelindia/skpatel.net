@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkPatelNet.Core.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SkPatelNet.Web.Framework.Infrastructure
 {
