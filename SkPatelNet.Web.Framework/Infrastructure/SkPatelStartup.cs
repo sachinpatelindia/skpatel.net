@@ -17,6 +17,7 @@ namespace SkPatelNet.Web.Framework.Infrastructure
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddRegisterDependency();
             services.AddControllersWithViews();
         }
     }

@@ -14,6 +14,10 @@
     <ProjectReference Include="..\SkPatelNet.Web.Framework\SkPatelNet.Web.Framework.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
 
 
 </Project>

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using SkPatelNet.Core.Infrastructure;
+using SkPatelNet.Web.Framework.UI;
 using System;
 
 namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
@@ -27,6 +28,11 @@ namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
         public static void AddSkPatelAuthentication(this IServiceCollection services)
         {
            // services.AddAuthentication();
+        }
+
+        public static void AddRegisterDependency(this IServiceCollection services)
+        {
+            services.AddScoped<IPageHeadBuilder, PageHeadBuilder>();
         }
     }
 }
