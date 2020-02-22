@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SkPatelNet.Core.Infrastructure;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
+using SkPatelNet.Core.Infrastructure;
+using System;
 
 namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
 {
@@ -23,6 +22,11 @@ namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
         public static void AddHttpContextAccessor(this IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        }
+
+        public static void AddSkPatelAuthentication(this IServiceCollection services)
+        {
+            services.AddAuthentication();
         }
     }
 }

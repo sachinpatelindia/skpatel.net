@@ -2,22 +2,24 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkPatelNet.Core.Infrastructure;
-using SkPatelNet.Web.Framework.Infrastructure.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SkPatelNet.Web.Framework.Infrastructure
 {
-    public class SkPatelStartup : ISkPatelStartup
+    public class SkPatelCommonStartup : ISkPatelStartup
     {
-        public int Order => 1000;
+        public int Order => 100;
 
         public void Configure(IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseSkPatelEndpoints();
+            applicationBuilder.UseStaticFiles();
         }
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            /// throw new NotImplementedException();
+            
         }
     }
 }

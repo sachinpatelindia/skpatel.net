@@ -9,5 +9,15 @@ namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
         {
             EngineContext.Current.ConfigureRequestPipleline(applicationBuilder);
         }
+
+        public static void UseSkPatelEndpoints(this IApplicationBuilder application)
+        {
+            application.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
     }
 }

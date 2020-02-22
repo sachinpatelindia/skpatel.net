@@ -6,18 +6,18 @@ using SkPatelNet.Web.Framework.Infrastructure.Extensions;
 
 namespace SkPatelNet.Web.Framework.Infrastructure
 {
-    public class SkPatelStartup : ISkPatelStartup
+    public class AuthenticationStartup : ISkPatelStartup
     {
-        public int Order => 1000;
+        public int Order => 200;
 
         public void Configure(IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseSkPatelEndpoints();
+            applicationBuilder.UseAuthentication();
         }
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            /// throw new NotImplementedException();
+            services.AddSkPatelAuthentication();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace SkPatelNet.Web
 
             // var engineContext = EngineContext.Create();
             //var provider= engineContext.ConfigureService(services,Configuration);
-            // services.AddControllersWithViews();
+             services.AddControllersWithViews();
             services.ConfigureApplicationServices(_configuration, _webHostingEnvironment.ContentRootPath);
             
     
@@ -52,7 +52,7 @@ namespace SkPatelNet.Web
             //app.UseHttpsRedirection();
             //app.UseStaticFiles();
 
-            //app.UseRouting();
+            app.UseRouting();
 
             // app.UseAuthorization();
 
