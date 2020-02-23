@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SkPatelNet.Core\SkPatelNet.Core.csproj" />
+    <ProjectReference Include="..\SkPatelNet.Services\SkPatelNet.Services.csproj" />
     <ProjectReference Include="..\SkPatelNet.Web.Framework\SkPatelNet.Web.Framework.csproj" />
   </ItemGroup>
 

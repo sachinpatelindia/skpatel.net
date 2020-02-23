@@ -1,6 +1,8 @@
 ﻿using SkPatelNet.Core.Data;
 using SkPatelNet.Core.Domain.Customers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SkPatelNet.Services.Customers
 {
@@ -31,9 +33,14 @@ namespace SkPatelNet.Services.Customers
             throw new NotImplementedException();
         }
 
+        public virtual IList<Customer> GetCustomers()
+        {
+            return _customerRepository.Data.ToList();
+        }
+
         public void InsertCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            _customerRepository.Add(customer);
         }
 
         public void UpdateCustomer(Customer customer)

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SkPatelNet.Core\SkPatelNet.Core.csproj" />
     <ProjectReference Include="..\SkPatelNet.Data\SkPatelNet.Data.csproj" />
+    <ProjectReference Include="..\SkPatelNet.Services\SkPatelNet.Services.csproj" />
   </ItemGroup>
 
 </Project>

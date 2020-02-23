@@ -1,4 +1,5 @@
 ﻿using SkPatelNet.Core.Domain.Customers;
+using System.Collections.Generic;
 
 namespace SkPatelNet.Services.Customers
 {
@@ -10,5 +11,6 @@ namespace SkPatelNet.Services.Customers
         Customer GetCustomerByEmail(string email);
         Customer GetCustomerByUserName(string userName);
         Customer GetCustomerBySystemName(string systemName);
+        public IList<Customer> GetCustomers();
     }
 }
