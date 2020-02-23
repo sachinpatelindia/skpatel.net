@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using SkPatelNet.Core.Infrastructure;
+using SkPatelNet.Data;
 using SkPatelNet.Web.Framework.UI;
 using System;
 
@@ -33,6 +34,14 @@ namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
         public static void AddRegisterDependency(this IServiceCollection services)
         {
             services.AddScoped<IPageHeadBuilder, PageHeadBuilder>();
+        }
+
+        public static void AddSkPatelNetDbContext(this IServiceCollection services)
+        {
+            services.AddDbContextPool<SkPatelNetDbContext>(options=>
+            {
+                options.UseSqlServerWithLazyLoading(services);
+            });
         }
     }
 }

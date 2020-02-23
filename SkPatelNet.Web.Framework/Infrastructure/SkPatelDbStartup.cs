@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkPatelNet.Core.Infrastructure;
+using SkPatelNet.Web.Framework.Infrastructure.Extensions;
 
 namespace SkPatelNet.Web.Framework.Infrastructure
 {
@@ -16,7 +17,9 @@ namespace SkPatelNet.Web.Framework.Infrastructure
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            // throw new NotImplementedException();
+            services.AddSkPatelNetDbContext();
+            services.AddEntityFrameworkSqlServer();
+            services.AddEntityFrameworkProxies();
         }
     }
 }
