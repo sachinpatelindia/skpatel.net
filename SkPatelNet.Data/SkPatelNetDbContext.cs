@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SkPatelNet.Core;
 using System;
+using System.Reflection;
+using System.Linq;
+using SkPatelNet.Data.Mapping;
 
 namespace SkPatelNet.Data
 {
@@ -11,6 +14,18 @@ namespace SkPatelNet.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var typeConfigurations = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(type => 
+                (type.BaseType?.IsGenericType ?? false) 
+                && (type.BaseType.GetGenericTypeDefinition() == typeof(SkPatelNetEntityTypeConfiguration<>)
+                || type.BaseType.GetGenericTypeDefinition() == typeof(SkPatelNetQueryTypeConfiguration<>)));
+
+            foreach(var typeConfiguration in typeConfigurations)
+            {
+                var configuration = (IMappingConfiguration)Activator.CreateInstance(typeConfiguration);
+                configuration.ApplyConfiguration(modelBuilder);
+            }
+
             base.OnModelCreating(modelBuilder);
         }
 
