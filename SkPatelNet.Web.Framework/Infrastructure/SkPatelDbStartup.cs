@@ -17,7 +17,7 @@ namespace SkPatelNet.Web.Framework.Infrastructure
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSkPatelNetDbContext();
+            services.AddSkPatelNetDbContext(configuration);
             services.AddEntityFrameworkSqlServer();
             services.AddEntityFrameworkProxies();
         }

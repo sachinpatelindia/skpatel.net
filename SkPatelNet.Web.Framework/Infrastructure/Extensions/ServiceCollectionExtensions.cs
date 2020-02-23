@@ -36,11 +36,11 @@ namespace SkPatelNet.Web.Framework.Infrastructure.Extensions
             services.AddScoped<IPageHeadBuilder, PageHeadBuilder>();
         }
 
-        public static void AddSkPatelNetDbContext(this IServiceCollection services)
+        public static void AddSkPatelNetDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContextPool<SkPatelNetDbContext>(options=>
             {
-                options.UseSqlServerWithLazyLoading(services);
+                options.UseSqlServerWithLazyLoading(services, configuration);
             });
         }
     }

@@ -10,8 +10,6 @@ namespace SkPatelNet.Data
     public class SkPatelNetDbContext:DbContext,ISkPatelNetDbContext
     {
         public SkPatelNetDbContext(DbContextOptions options):base(options) { }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var typeConfigurations = Assembly.GetExecutingAssembly().GetTypes()
