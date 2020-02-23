@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace SkPatelNet.Core.Data
 {
-    public interface IRepository<T> where T:BaseEntity
+    public partial interface IRepository<TEntity> where TEntity:BaseEntity
     {
-        void Add(T entity);
-        void Edit(T entity);
-        void Delete(T entity);
-        IQueryable<T> Data { get; set; }
+        void Add(TEntity entity);
+        void Edit(TEntity entity);
+        void Delete(TEntity entity);
+        IQueryable<TEntity> Data { get; }
     }
 }
