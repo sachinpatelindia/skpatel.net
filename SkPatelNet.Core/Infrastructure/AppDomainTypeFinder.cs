@@ -11,19 +11,14 @@ namespace SkPatelNet.Core.Infrastructure
     public class AppDomainTypeFinder:ITypeFinder
     {
         private bool _ignoreReflectionErrors = true;
-        //private ISkPatelFileProvider _fileProvider;
         private readonly IFileProvider _fileProvider;
-        //public AppDomainTypeFinder(ISkPatelFileProvider fileProvider=null)
-        //{
-        //    _fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
-        //}
         public AppDomainTypeFinder(IFileProvider fileProvider=null)
         {
             this._fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
         }
         public bool LoadAppDomainAssemblies { get; set; } = true;
         public IList<string> AssemblyNames { get; set; } = new List<string>();
-        public string AssemblySkipLoadingPattern { get; set; } = "^System|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Rhino|^Telerik|^Iesi|^TestDriven|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease";
+        public string AssemblySkipLoadingPattern { get; set; } = "^System|^netstandard|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Rhino|^Telerik|^Iesi|^TestDriven|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease|^SkPatelNet.Web.Views";
 
         public string AssemblyRestrictToLoadingPattern { get; set; } = ".*";
         public virtual AppDomain App => AppDomain.CurrentDomain;
@@ -185,10 +180,9 @@ namespace SkPatelNet.Core.Infrastructure
                 try
                 {
                     var an = AssemblyName.GetAssemblyName(dllPath);
-                    if(Matches(an.FullName) && !loadedAssemblyNames.Contains(an.FullName))
+                    if (Matches(an.FullName) && !loadedAssemblyNames.Contains(an.FullName))
                     {
-                        if (!(an.FullName.Contains("SkPatelNet.Web.Views")))
-                            App.Load(an);
+                        App.Load(an);
                     }
                 }
                 catch(BadImageFormatException ex)
