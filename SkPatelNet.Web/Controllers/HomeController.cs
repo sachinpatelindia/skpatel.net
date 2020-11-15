@@ -9,6 +9,7 @@ using SkPatelNet.Web.Models;
 
 namespace SkPatelNet.Web.Controllers
 {
+//Home controller
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
